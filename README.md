@@ -7,8 +7,10 @@
 python get_file_list.py --prefix="video/" --bucket=brick.vino9.net --output=video_file_list.json
 
 # compare the file listed in input file and check if the corresponding local file exists and is of the same size
-python check_files.py --input=video_file_list.json --base=/Volumes/media
+python check_files.py --input=video_file_list.json --base=/volume1/media
 
+# using bulk delete API to delete objects from S3 bucket quickly
+python bulk_del.py --bucket=brick.vino9.net --prefix=blackhole/old
 
 ```
 
