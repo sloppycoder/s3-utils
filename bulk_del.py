@@ -28,8 +28,6 @@ def bulk_del_objects(s3, bucket_name, prefix):
         else:
             break
 
-    return result
-
 
 def parse_args(argv):
     parser = argparse.ArgumentParser()
