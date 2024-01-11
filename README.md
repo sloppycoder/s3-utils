@@ -1,62 +1,26 @@
 
-# Welcome to your Python project
-
-This project is set up Python project with dev tooling pre-configured
-
-* black
-* flake8
-* isort
-* mypy
-* VS Code support
-
-## Setup
-
-The easiest way to get started is probably use [Jetpack.io devbox](https://www.jetpack.io/devbox). Install devbox first, then
+# Utilites for working with AWS S3 objects
 
 ```shell
-devbox shell
 
-# you should ready to go
+# extract data from S3 objects and store them into a JSON file for later use
+python get_file_list.py --prefix="video/" --bucket=brick.vino9.net --output=video_file_list.json
+
+# compare the file listed in input file and check if the corresponding local file exists and is of the same size
+python check_files.py --input=video_file_list.json --base=/Volumes/media
+
 
 ```
 
-The more traditional way is to install python 3.10 and [poetry](https://python-poetry.org/), then
+## AWS CLI for restore files from Glacier
 
 ```shell
 
-# create virtualenv
-poetry shell
-# install dependencies
-poetry install
+# get a list of files
+aws s3api list-objects --bucket bucket_name_ --query 'Contents[].Key' --prefix="prefix/" | jq -r '.[]' > obj_list.txt
 
-```
+# check the restore status for objects in a list, initiate restore if it is yet to start
+./restore_status < obj_list.txt
 
-## Develop the code for the stack
-
-```shell
-
-# update your DATABASE_URL is used
-# create database and assign proper privileges to the user
-# e.g.
-# create database mydb;
-# grant all privileges on database mydb to me;
-
-nano .env
-
-# run alembic migration
-alembic upgrade head
-
-# run unit tests
-pytest
-
-```
-
-## generate code using config file without interactive input
-
-Create a [config file](sample_prog.json) with options to use, then
-
-```shell
-
-cookiecutter gh:vino9org/cookiecutter-python --config-file sample_prog.json --no-input
 
 ```
